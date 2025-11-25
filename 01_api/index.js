@@ -29,9 +29,9 @@ app.get('/health', async (req, res) => {
   }
 });
 
-app.get('/attractions', async (req, res) => {
+app.get('/disneycharacters', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM attraction');
+    const [rows] = await pool.query('SELECT * FROM disneycharacters');
     res.json(rows);
   } catch (e) {
     console.error(e);

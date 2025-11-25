@@ -8,10 +8,10 @@ export default function Page() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function getAttractions() {
+    async function getDisneyCharacters() {
       try {
         const apiHost = process.env.NEXT_PUBLIC_API_HOST;
-        const res = await fetch(`${apiHost}/attractions`, { cache: "no-store" });
+        const res = await fetch(`${apiHost}/disneycharacters`, { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setRows(data);
@@ -22,7 +22,7 @@ export default function Page() {
       }
     }
 
-    getAttractions();
+    getDisneyCharacters();
   }, []);
 
   if (loading) {
@@ -44,12 +44,12 @@ export default function Page() {
   return (
     <main className="container">
       <header className="header">
-        <h1 className="title">Samraggi Pyarial 6708698</h1>
-        <p className="subtitle">Discover points of interest nearby</p>
+        <h1 className="title">Disney Characters</h1>
+        <p className="subtitle">Samraggi Pyarial 6708698</p>
       </header>
 
       {!rows || rows.length === 0 ? (
-        <div className="empty">No attractions found.</div>
+        <div className="empty">No characters found.</div>
       ) : (
         <section className="grid" aria-live="polite">
           {rows.map((x) => (
@@ -68,12 +68,11 @@ export default function Page() {
               <div className="body">
                 <h3 className="card-title">{x.name}</h3>
                 {x.detail && <p className="detail">{x.detail}</p>}
-                <div className="meta">
-                  <small>
-                    Lat: <span className="code">{x.latitude}</span> · Lng:{" "}
-                    <span className="code">{x.longitude}</span>
-                  </small>
-                </div>
+                {x.yearofrelease && (
+                  <p className="meta">
+                    <strong>Year of Release:</strong> {x.yearofrelease}
+                  </p>
+                )}
               </div>
             </article>
           ))}
